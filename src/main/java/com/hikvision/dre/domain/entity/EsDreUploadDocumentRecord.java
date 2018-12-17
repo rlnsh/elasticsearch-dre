@@ -1,7 +1,11 @@
-package com.hikvision.dre.domain;
+package com.hikvision.dre.domain.entity;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,6 +19,12 @@ import java.util.Date;
 @Entity
 @Table(name = "es_dre_upload_document_record")
 public class EsDreUploadDocumentRecord extends BaseEntity {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(generator = "idGenerator")
+    @GenericGenerator(name = "idGenerator", strategy = "com.hikvision.dre.domain.generator.SnowflakeIdWorker")
+    private Long id;
 
     /**
      * 文件名
@@ -46,6 +56,14 @@ public class EsDreUploadDocumentRecord extends BaseEntity {
     @Column(name = "publish_date", nullable = false, columnDefinition = "date default '1970-01-01'")
     @Temporal(TemporalType.DATE)
     private Date publishDate;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFileName() {
         return fileName;

@@ -1,6 +1,6 @@
 package com.hikvision.dre.domain.repository;
 
-import com.hikvision.dre.domain.EsDreIndex;
+import com.hikvision.dre.domain.entity.EsDreIndex;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -1,6 +1,6 @@
 package com.hikvision.dre.domain.repository;
 
-import com.hikvision.dre.domain.EsDreUploadDocumentRecord;
+import com.hikvision.dre.domain.entity.EsDreUploadDocumentRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

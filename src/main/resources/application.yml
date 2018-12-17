@@ -7,7 +7,31 @@ server:
 spring:
   application:
     name: es-dre-provider
+#  cloud:
+#    consul:
+#      host: localhost
+#      port: 8500
+  #jpa配置
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        temp:
+          use_jdbc_metadata_defaults: false
 
+#数据源配置
+dre:
+  datasource:
+    url: jdbc:mysql://10.14.69.48:3306/es_dre_db?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: hik12345+
+    driver-class-name: com.mysql.jdbc.Driver
+
+#RestTemplate配置
 remote:
   maxTotalConnect: 200 #连接池的最大连接数
   maxConnectPerRoute: 100 #单个主机的最大连接数

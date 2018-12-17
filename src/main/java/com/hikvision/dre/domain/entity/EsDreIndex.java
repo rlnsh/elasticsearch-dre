@@ -1,4 +1,4 @@
-package com.hikvision.dre.domain;
+package com.hikvision.dre.domain.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * @Description: ES索引管理表
  */
 @Entity
-@Table(name = "es_dre_index", indexes = {@Index(columnList = "code")})
+@Table(name = "es_dre_index", indexes = {@Index(columnList = "code", unique = true)})
 public class EsDreIndex extends BaseEntity{
 
     @Id

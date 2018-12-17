@@ -1,6 +1,4 @@
-package com.hikvision.dre.domain;
-
-import org.springframework.data.jpa.repository.JpaRepository;
+package com.hikvision.dre.domain.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Temporal;
