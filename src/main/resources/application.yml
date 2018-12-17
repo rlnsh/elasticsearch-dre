@@ -17,11 +17,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-        temp:
-          use_jdbc_metadata_defaults: false
 
 #数据源配置
 dre:
