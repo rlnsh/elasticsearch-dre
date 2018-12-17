@@ -20,7 +20,6 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "es_dre_upload_document_record")
-@EntityListeners(AuditingEntityListener.class)
 public class EsDreUploadDocumentRecord extends BaseEntity {
 
     @Id

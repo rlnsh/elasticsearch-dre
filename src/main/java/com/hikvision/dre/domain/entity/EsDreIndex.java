@@ -18,7 +18,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "es_dre_index", indexes = {@Index(columnList = "code", unique = true)})
-@EntityListeners(AuditingEntityListener.class)
 public class EsDreIndex extends BaseEntity{
 
     @Id
