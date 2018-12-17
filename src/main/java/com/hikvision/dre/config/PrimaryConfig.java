@@ -32,13 +32,13 @@ public class PrimaryConfig {
 	
 	@Autowired
 	private JpaProperties jpaProperties;
-	
+
 	@Bean("entityManagerFactoryPrimary")
 	@Primary
 	public LocalContainerEntityManagerFactoryBean entityManagerFactoryPrimary() {
 		
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		vendorAdapter.setGenerateDdl(true); // hibernate基本配置
+		vendorAdapter.setGenerateDdl(false); // hibernate基本配置
 		vendorAdapter.setDatabase(Database.MYSQL);
 		vendorAdapter.setShowSql(true);
 		

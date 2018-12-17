@@ -1,9 +1,11 @@
 package com.hikvision.dre.domain.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
@@ -16,6 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "es_dre_index", indexes = {@Index(columnList = "code", unique = true)})
+@EntityListeners(AuditingEntityListener.class)
 public class EsDreIndex extends BaseEntity{
 
     @Id

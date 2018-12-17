@@ -1,9 +1,11 @@
 package com.hikvision.dre.domain.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -18,6 +20,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "es_dre_upload_document_record")
+@EntityListeners(AuditingEntityListener.class)
 public class EsDreUploadDocumentRecord extends BaseEntity {
 
     @Id

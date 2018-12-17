@@ -16,7 +16,8 @@ spring:
     database: mysql
     show-sql: true
     hibernate:
-      ddl-auto: update
+      use-new-id-generator-mappings: false
+#      ddl-auto: update
 
 #数据源配置
 dre:

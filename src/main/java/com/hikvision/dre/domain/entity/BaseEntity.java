@@ -1,5 +1,8 @@
 package com.hikvision.dre.domain.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
@@ -16,16 +19,21 @@ import java.util.Date;
 public abstract class BaseEntity{
 
     @Version
-    @Column(name = "version")
+    @Column(name = "version", nullable = false)
     private int version;
 
+    @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_time")
+    @Column(name = "create_time", nullable = false)
     private Date createTime;
 
+    @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "modify_time")
+    @Column(name = "modify_time", nullable = false)
     private Date modifyTime;
+
+    @Column(name = "status", nullable = false)
+    private Integer status = 1;
 
     public BaseEntity() {
     }
@@ -52,5 +60,13 @@ public abstract class BaseEntity{
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
