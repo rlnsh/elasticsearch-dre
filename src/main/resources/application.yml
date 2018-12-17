@@ -1,0 +1,23 @@
+server:
+  port: 9090
+  servlet:
+    context-path: /es-dre
+
+#spring相关
+spring:
+  application:
+    name: es-dre-provider
+
+remote:
+  maxTotalConnect: 200 #连接池的最大连接数
+  maxConnectPerRoute: 100 #单个主机的最大连接数
+  connectTimeout: 10000 #连接超时
+  readTimeout: 30000 #读取超时
+
+#es相关
+es:
+  url: http://10.14.69.82:9200 #es服务地址
+  doc:
+    pipelineName: attachment #管道名称
+    indexName: hkvs #索引名称
+    indexType: doc #索引类型
