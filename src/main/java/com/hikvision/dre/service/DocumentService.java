@@ -6,6 +6,8 @@ import com.hikvision.dre.dto.doc.request.upload.UploadDocumentRequest;
 import com.hikvision.dre.dto.doc.response.DeleteDocByIdResponse;
 import com.hikvision.dre.dto.doc.response.UpdateDocByIdResponse;
 import com.hikvision.dre.dto.doc.response.upload.UploadDocumentResponse;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @Auther: wangdingding5
@@ -19,19 +21,22 @@ public interface DocumentService {
      * @param request
      * @return
      */
-    UploadDocumentResponse uploadDocument(UploadDocumentRequest request);
+    @RequestMapping("es/dre/document/uploadDocument")
+    UploadDocumentResponse uploadDocument(@RequestBody UploadDocumentRequest request);
 
     /**
      * 根据ID更新文档信息
      * @param request
      * @return
      */
-    UpdateDocByIdResponse updateDocById(UpdateDocByIdRequest request);
+    @RequestMapping("es/dre/document/updateDocById")
+    UpdateDocByIdResponse updateDocById(@RequestBody UpdateDocByIdRequest request);
 
     /**
      * 根据ID删除某个文档
      * @param request
      * @return
      */
-    DeleteDocByIdResponse deleteDocById(DeleteDocByIdRequest request);
+    @RequestMapping("es/dre/document/deleteDocById")
+    DeleteDocByIdResponse deleteDocById(@RequestBody DeleteDocByIdRequest request);
 }

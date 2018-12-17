@@ -2,6 +2,8 @@ package com.hikvision.dre.service;
 
 import com.hikvision.dre.dto.doc.request.query.QueryDocListRequest;
 import com.hikvision.dre.dto.doc.response.query.QueryDocListResponse;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @Auther: wangdingding5
@@ -15,5 +17,6 @@ public interface DocumentQueryService {
      * @param request
      * @return
      */
-    QueryDocListResponse queryDocList(QueryDocListRequest request);
+    @RequestMapping("es/dre/document/queryDocList")
+    QueryDocListResponse queryDocList(@RequestBody QueryDocListRequest request);
 }

@@ -1,12 +1,10 @@
 package com.hikvision.dre.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.hikvision.dre.bean.es.query.response.ESQueryResponseBean;
 import com.hikvision.dre.bean.es.upload.request.EsUploadDocRequestBean;
 import com.hikvision.dre.common.ESApiConstantsService;
 import com.hikvision.dre.dto.doc.request.DeleteDocByIdRequest;
 import com.hikvision.dre.dto.doc.request.UpdateDocByIdRequest;
-import com.hikvision.dre.dto.doc.request.query.QueryDocListRequest;
 import com.hikvision.dre.dto.doc.request.upload.UploadDocumentRequest;
 import com.hikvision.dre.dto.doc.response.DeleteDocByIdResponse;
 import com.hikvision.dre.dto.doc.response.UpdateDocByIdResponse;
@@ -15,9 +13,8 @@ import com.hikvision.dre.exception.ErrorCode;
 import com.hikvision.dre.service.DocumentService;
 import com.hikvision.dre.util.FileUtil;
 import com.hikvision.dre.util.GenerateSearchApiUtil;
-import com.hikvision.dre.util.PagingUtil;
 import com.hikvision.dre.util.RestTemplateUtil;
-import com.hikvision.dre.util.SnowflakeIdWorker;
+import com.hikvision.dre.domain.generator.SnowflakeIdWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;

@@ -71,7 +71,7 @@ public class DocumentQueryServiceImpl implements DocumentQueryService {
             Map<String, List<String>> highlight = hit.getHighlight();
             QueryDocListResponse.DocInfo docInfo = JSONArray.parseObject(JSONObject.toJSONString(source), QueryDocListResponse.DocInfo.class);
             docInfo.setId(hit.get_id());
-            docInfo.setHighlights(highlight.get("attachment.content"));
+            docInfo.setHighlights(highlight != null ? highlight.get("attachment.content") : new ArrayList<>());
             results.add(docInfo);
         }
 
