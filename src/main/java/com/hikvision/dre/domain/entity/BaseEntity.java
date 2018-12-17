@@ -1,6 +1,7 @@
 package com.hikvision.dre.domain.entity;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -11,7 +12,8 @@ import java.util.Date;
  * @Date: 2018/12/17 10:57
  * @Description:
  */
-public abstract class BaseEntity {
+@MappedSuperclass
+public abstract class BaseEntity{
 
     @Version
     @Column(name = "version")
