@@ -1,4 +1,4 @@
-package com.hikvision.dre.util;
+package com.hikvision.dre.domain.generator;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;

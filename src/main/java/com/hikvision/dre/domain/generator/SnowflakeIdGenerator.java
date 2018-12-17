@@ -1,4 +1,4 @@
-package com.hikvision.dre.util;
+package com.hikvision.dre.domain.generator;
 
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
