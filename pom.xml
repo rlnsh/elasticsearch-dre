@@ -15,11 +15,12 @@
     <description>Document Retrieval Engine project for Spring Boot By ElasticSearch</description>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <fastjson.version>1.2.31</fastjson.version>
         <hibernate.version>5.0.12.Final</hibernate.version>
         <druid.version>1.1.9</druid.version>
-        <logback.version>5.1</logback.version>
         <hik.sdk.version>0.0.4-RELEASE</hik.sdk.version>
     </properties>
 
@@ -87,7 +88,7 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>${logback.version}</version>
+            <version>5.1</version>
         </dependency>
         <dependency>
             <groupId>com.hikvision</groupId>
@@ -107,6 +108,32 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.4</version>
+                <configuration>
+                    <threshold>High</threshold>
+                    <effort>Default</effort>
+                    <findbugsXmlOutput>true</findbugsXmlOutput>
+                    <findbugsXmlOutputDirectory>target/site/findbugs</findbugsXmlOutputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <format>xml</format>
+                    <encoding>utf-8</encoding>
+                    <instrumentation>
+                        <includes>
+                            <include>com/hikvision/es-dre/**/*.class</include>
+                        </includes>
+                    </instrumentation>
+                </configuration>
             </plugin>
         </plugins>
     </build>

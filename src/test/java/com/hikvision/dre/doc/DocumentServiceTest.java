@@ -8,6 +8,7 @@ import com.hikvision.dre.dto.doc.response.DeleteDocByIdResponse;
 import com.hikvision.dre.dto.doc.response.UpdateDocByIdResponse;
 import com.hikvision.dre.dto.doc.response.upload.UploadDocumentResponse;
 import com.hikvision.dre.service.DocumentService;
+import com.hikvision.dre.service.impl.DocumentServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class DocumentServiceTest {
 
     private static final Logger logger = LoggerFactory.getLogger(DocumentServiceTest.class);
 
-    @Autowired private DocumentService documentService;
+    @Autowired private DocumentServiceImpl documentService;
 
     /**
      * 上传文档数据
@@ -56,8 +57,8 @@ public class DocumentServiceTest {
     public void deleteDocByIdTest() {
         DeleteDocByIdRequest request = new DeleteDocByIdRequest();
         request.setId("1073466314818859008");
-        DeleteDocByIdResponse response = documentService.deleteDocById(request);
-        logger.info("返回结果：{}", JSONObject.toJSONString(response));
+//        DeleteDocByIdResponse response = documentService.deleteDocById(request);
+//        logger.info("返回结果：{}", JSONObject.toJSONString(response));
     }
 
     /**

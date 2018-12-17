@@ -30,7 +30,7 @@ import java.util.Map;
  * @Description: 文档检索相关实现类
  */
 @Service
-public class DocumentQueryServiceImpl implements DocumentQueryService {
+public class DocumentQueryServiceImpl {
 
     private static final Logger logger = LoggerFactory.getLogger(DocumentQueryServiceImpl.class);
 
@@ -43,7 +43,6 @@ public class DocumentQueryServiceImpl implements DocumentQueryService {
      * @param request
      * @return
      */
-    @Override
     public QueryDocListResponse queryDocList(QueryDocListRequest request) {
         QueryDocListResponse response = new QueryDocListResponse();
 

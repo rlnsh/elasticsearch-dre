@@ -1,10 +1,13 @@
 package com.hikvision.dre.repository;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hikvision.dre.domain.entity.EsDreIndex;
 import com.hikvision.dre.domain.entity.EsDreUploadDocumentRecord;
 import com.hikvision.dre.domain.repository.EsDreUploadDocumentRecordRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -20,10 +23,12 @@ import java.util.Date;
 @SpringBootTest
 public class EsDreUploadDocumentRecordTest {
 
+    private static final Logger logger = LoggerFactory.getLogger(EsDreUploadDocumentRecordTest.class);
+
     @Autowired private EsDreUploadDocumentRecordRepository uploadDocumentRecordRepository;
 
     /**
-     * 保存索引
+     * 保存文档上传记录
      */
     @Test
     public void saveEsDreIndex() {
@@ -34,5 +39,27 @@ public class EsDreUploadDocumentRecordTest {
         record.setFileSize(284001L);
         record.setPublishDate(new Date());
         uploadDocumentRecordRepository.save(record);
+    }
+
+    /**
+     * 更新文档上传记录
+     */
+    @Test
+    public void updateEsDreIndex() {
+//        EsDreUploadDocumentRecord record = uploadDocumentRecordRepository.getOne(1074614420956569600L);
+//        logger.info("开始更新....record: {}", JSONObject.toJSONString(record));
+//        record.setFileName("新员工入职指南");
+//        record.setFilePath("D:\\帮助\\OA\\新员工入职指南.docx");
+//        record.setFileType("docx");
+//        record.setFileSize(284001L);
+//        record.setPublishDate(new Date());
+//        uploadDocumentRecordRepository.save(record);
+
+        try {
+            Thread.sleep(5000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        logger.info("更新完毕....");
     }
 }

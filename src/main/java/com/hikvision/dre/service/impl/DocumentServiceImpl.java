@@ -30,7 +30,7 @@ import org.springframework.web.client.RestTemplate;
  * @Description: 文档增删改服务实现类
  */
 @Service
-public class DocumentServiceImpl implements DocumentService {
+public class DocumentServiceImpl {
 
     private static final Logger logger = LoggerFactory.getLogger(DocumentServiceImpl.class);
 
@@ -44,7 +44,6 @@ public class DocumentServiceImpl implements DocumentService {
      * @param request
      * @return
      */
-    @Override
     public UploadDocumentResponse uploadDocument(UploadDocumentRequest request) {
         UploadDocumentResponse response = new UploadDocumentResponse();
 
@@ -74,7 +73,6 @@ public class DocumentServiceImpl implements DocumentService {
      * @param request
      * @return
      */
-    @Override
     public UpdateDocByIdResponse updateDocById(UpdateDocByIdRequest request) {
         UpdateDocByIdResponse response = new UpdateDocByIdResponse();
         if (request.getId() == null) {
@@ -103,7 +101,6 @@ public class DocumentServiceImpl implements DocumentService {
      * @param request
      * @return
      */
-    @Override
     public DeleteDocByIdResponse deleteDocById(DeleteDocByIdRequest request) {
         DeleteDocByIdResponse response = new DeleteDocByIdResponse();
         if (request.getId() == null) {

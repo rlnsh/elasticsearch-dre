@@ -39,7 +39,7 @@ public class EsDreIndexTest {
         dreIndex.setName("wdd");
         dreIndex.setCode("wdd2");
         dreIndex.setType("doc");
-        indexRepository.save(dreIndex);
+//        indexRepository.save(dreIndex);
     }
 
     /**

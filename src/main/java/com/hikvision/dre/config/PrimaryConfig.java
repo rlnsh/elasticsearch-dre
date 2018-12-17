@@ -41,12 +41,13 @@ public class PrimaryConfig {
 		vendorAdapter.setGenerateDdl(false); // hibernate基本配置
 		vendorAdapter.setDatabase(Database.MYSQL);
 		vendorAdapter.setShowSql(true);
-		
+		vendorAdapter.setPrepareConnection(true);
+
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
 		factory.setPackagesToScan("com.hikvision.dre.domain.entity"); // 实体扫描
 		factory.setDataSource(primaryDataSource);
-		
+
 		Map<String, Object> hibernateProperties = jpaProperties.getHibernateProperties(new HibernateSettings());
 		factory.setJpaPropertyMap(hibernateProperties); // 主要目的：读取application.yml的naming-strategy,并设置进去，不然实体属性与表字段之间无法进行驼峰->下划线的自动转换,本来默认就是自动转换的。但是你是配的多个自定义数据源，spring特性之一，一旦自定义，默认不生效，了解一下...<br>
 		return factory;
