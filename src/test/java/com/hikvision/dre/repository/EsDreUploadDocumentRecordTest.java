@@ -46,20 +46,20 @@ public class EsDreUploadDocumentRecordTest {
      */
     @Test
     public void updateEsDreIndex() {
-//        EsDreUploadDocumentRecord record = uploadDocumentRecordRepository.getOne(1074614420956569600L);
-//        logger.info("开始更新....record: {}", JSONObject.toJSONString(record));
-//        record.setFileName("新员工入职指南");
-//        record.setFilePath("D:\\帮助\\OA\\新员工入职指南.docx");
-//        record.setFileType("docx");
-//        record.setFileSize(284001L);
-//        record.setPublishDate(new Date());
-//        uploadDocumentRecordRepository.save(record);
+        EsDreUploadDocumentRecord record = uploadDocumentRecordRepository.findById(1074614420956569600L).get();
+        logger.info("开始更新....record: {}", JSONObject.toJSONString(record));
+        record.setFileName("新员工入职指南");
+        record.setFilePath("D:\\帮助\\OA\\新员工入职指南.docx");
+        record.setFileType("docx");
+        record.setFileSize(284004L);
+        record.setPublishDate(new Date());
+        uploadDocumentRecordRepository.save(record);
 
-        try {
-            Thread.sleep(5000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(5000L);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         logger.info("更新完毕....");
     }
 }
