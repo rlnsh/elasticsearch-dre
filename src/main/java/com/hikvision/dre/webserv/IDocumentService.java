@@ -3,6 +3,7 @@ package com.hikvision.dre.webserv;
 import com.hikvision.dre.common.BaseController;
 import com.hikvision.dre.dto.doc.request.DeleteDocByIdRequest;
 import com.hikvision.dre.dto.doc.request.UpdateDocByIdRequest;
+import com.hikvision.dre.dto.doc.request.upload.UploadDocumentBase64Request;
 import com.hikvision.dre.dto.doc.request.upload.UploadDocumentRequest;
 import com.hikvision.dre.dto.doc.response.DeleteDocByIdResponse;
 import com.hikvision.dre.dto.doc.response.UpdateDocByIdResponse;
@@ -31,6 +32,16 @@ public class IDocumentService extends BaseController implements DocumentService 
     @Override
     public UploadDocumentResponse uploadDocument(@RequestBody UploadDocumentRequest request) {
         return documentService.uploadDocument(request);
+    }
+
+    /**
+     * 上传文档数据到ES-传输Base64文档流
+     * @param request
+     * @return
+     */
+    @Override
+    public UploadDocumentResponse uploadDocumentBase64(@RequestBody UploadDocumentBase64Request request) {
+        return documentService.uploadDocumentBase64(request);
     }
 
     /**

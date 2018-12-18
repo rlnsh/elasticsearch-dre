@@ -7,6 +7,7 @@ import com.hikvision.dre.dao.EsDreUploadDocumentRecordDao;
 import com.hikvision.dre.domain.entity.EsDreUploadDocumentRecord;
 import com.hikvision.dre.dto.doc.request.DeleteDocByIdRequest;
 import com.hikvision.dre.dto.doc.request.UpdateDocByIdRequest;
+import com.hikvision.dre.dto.doc.request.upload.UploadDocumentBase64Request;
 import com.hikvision.dre.dto.doc.request.upload.UploadDocumentRequest;
 import com.hikvision.dre.dto.doc.response.DeleteDocByIdResponse;
 import com.hikvision.dre.dto.doc.response.UpdateDocByIdResponse;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
+import java.util.Date;
 
 /**
  * @Auther: wangdingding5
@@ -53,21 +55,14 @@ public class DocumentServiceImpl {
         UploadDocumentResponse response = new UploadDocumentResponse();
 
         String filePath = request.getFilePath();
-//        SnowflakeIdWorker snowflakeIdWorker = new SnowflakeIdWorker();
-//        long id = snowflakeIdWorker.nextId();
-        EsDreUploadDocumentRecord  uploadDocRecord = new EsDreUploadDocumentRecord();
-        uploadDocRecord.setFileName(request.getFileName());
-        uploadDocRecord.setFileType(request.getDocType());
-        uploadDocRecord.setPublishDate(DateUtils.parse(request.getPublishDate(), DateUtils.PATTERN_DAY));
-        uploadDocRecord.setFilePath(filePath);
 
-        EsUploadDocRequestBean esUploadDocRequestBean = new EsUploadDocRequestBean();
-        BeanUtils.copyProperties(request, esUploadDocRequestBean);
+        UploadDocumentBase64Request base64Request = new UploadDocumentBase64Request();
+        BeanUtils.copyProperties(request, base64Request);
         try {
             File file = FileUtil.getFile(filePath);
-            uploadDocRecord.setFileSize(FileUtil.getFileSize(file));
             String data = FileUtil.encodeBase64File(file);
-            esUploadDocRequestBean.setData(data);
+            base64Request.setData(data);
+            base64Request.setFileSize(file.length());
         } catch (Exception e) {
             logger.error("文件Base64编码错误", e);
             response.setCode(ErrorCode.SELF_PROGRAMER);
@@ -75,7 +70,33 @@ public class DocumentServiceImpl {
             return response;
         }
 
+        return uploadDocumentBase64(base64Request);
+    }
+
+    /**
+     * 上传文档数据到ES-传输Base64文档流
+     * @param request
+     * @return
+     */
+    public UploadDocumentResponse uploadDocumentBase64(UploadDocumentBase64Request request) {
+        UploadDocumentResponse response = new UploadDocumentResponse();
+
+        String data = request.getData();
+        String filePath = request.getFilePath() != null ? request.getFilePath() : "";
+        Date publishDate = request.getPublishDate() != null ? DateUtils.parse(request.getPublishDate(), DateUtils.PATTERN_DAY) : new Date();
+
+        EsDreUploadDocumentRecord  uploadDocRecord = new EsDreUploadDocumentRecord();
+        uploadDocRecord.setFileName(request.getFileName());
+        uploadDocRecord.setFileType(request.getDocType());
+        uploadDocRecord.setPublishDate(publishDate);
+        uploadDocRecord.setFilePath(filePath);
+        uploadDocRecord.setFileSize(request.getFileSize());
+
+        EsUploadDocRequestBean esUploadDocRequestBean = new EsUploadDocRequestBean();
+        BeanUtils.copyProperties(request, esUploadDocRequestBean);
+        esUploadDocRequestBean.setData(data);
         long id = uploadDocumentRecordDao.save(uploadDocRecord);
+
         String url = esApiConService.ES_URL_DOC_PREFIX + esApiConService.SLASH + id + esApiConService.ES_URL_PIPELINE_DOC_SUFFIX;
 
         logger.info("上传文档到ES-params:{}", JSONObject.toJSONString(esUploadDocRequestBean));

@@ -2,6 +2,7 @@ package com.hikvision.dre.service;
 
 import com.hikvision.dre.dto.doc.request.DeleteDocByIdRequest;
 import com.hikvision.dre.dto.doc.request.UpdateDocByIdRequest;
+import com.hikvision.dre.dto.doc.request.upload.UploadDocumentBase64Request;
 import com.hikvision.dre.dto.doc.request.upload.UploadDocumentRequest;
 import com.hikvision.dre.dto.doc.response.DeleteDocByIdResponse;
 import com.hikvision.dre.dto.doc.response.UpdateDocByIdResponse;
@@ -23,6 +24,14 @@ public interface DocumentService {
      */
     @RequestMapping("es/dre/document/uploadDocument")
     UploadDocumentResponse uploadDocument(@RequestBody UploadDocumentRequest request);
+
+    /**
+     * 上传文档数据到ES-传输Base64文档流
+     * @param request
+     * @return
+     */
+    @RequestMapping("es/dre/document/uploadDocumentBase64")
+    UploadDocumentResponse uploadDocumentBase64(@RequestBody UploadDocumentBase64Request request);
 
     /**
      * 根据ID更新文档信息

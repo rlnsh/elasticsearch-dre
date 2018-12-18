@@ -1,10 +1,15 @@
 package com.hikvision.dre.util;
 
 
+import org.apache.commons.lang3.RandomUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * @Auther: wangdingding5
