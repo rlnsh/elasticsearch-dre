@@ -2,6 +2,8 @@ package com.hikvision.dre.dto.doc.request.upload;
 
 import com.hikvision.dre.common.app.AppRequest;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @Auther: wangdingding5
  * @Date: 2018/12/13 20:36
@@ -18,6 +20,7 @@ public class UploadDocumentRequest extends AppRequest {
     /**
      * 文件路径
      */
+    @NotNull(message = "文件路径不能为空！")
     private String filePath;
 
     /**

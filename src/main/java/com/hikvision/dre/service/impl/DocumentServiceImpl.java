@@ -3,6 +3,8 @@ package com.hikvision.dre.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.hikvision.dre.bean.es.upload.request.EsUploadDocRequestBean;
 import com.hikvision.dre.common.ESApiConstantsService;
+import com.hikvision.dre.dao.EsDreUploadDocumentRecordDao;
+import com.hikvision.dre.domain.entity.EsDreUploadDocumentRecord;
 import com.hikvision.dre.dto.doc.request.DeleteDocByIdRequest;
 import com.hikvision.dre.dto.doc.request.UpdateDocByIdRequest;
 import com.hikvision.dre.dto.doc.request.upload.UploadDocumentRequest;
@@ -10,11 +12,10 @@ import com.hikvision.dre.dto.doc.response.DeleteDocByIdResponse;
 import com.hikvision.dre.dto.doc.response.UpdateDocByIdResponse;
 import com.hikvision.dre.dto.doc.response.upload.UploadDocumentResponse;
 import com.hikvision.dre.exception.ErrorCode;
-import com.hikvision.dre.service.DocumentService;
+import com.hikvision.dre.util.DateUtils;
 import com.hikvision.dre.util.FileUtil;
 import com.hikvision.dre.util.GenerateSearchApiUtil;
 import com.hikvision.dre.util.RestTemplateUtil;
-import com.hikvision.dre.domain.generator.SnowflakeIdWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -23,6 +24,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.File;
 
 /**
  * @Auther: wangdingding5
@@ -39,6 +42,8 @@ public class DocumentServiceImpl {
 
     @Autowired private ESApiConstantsService esApiConService;
 
+    @Autowired private EsDreUploadDocumentRecordDao uploadDocumentRecordDao;
+
     /**
      * 上传文档数据到ES
      * @param request
@@ -47,14 +52,21 @@ public class DocumentServiceImpl {
     public UploadDocumentResponse uploadDocument(UploadDocumentRequest request) {
         UploadDocumentResponse response = new UploadDocumentResponse();
 
-        SnowflakeIdWorker snowflakeIdWorker = new SnowflakeIdWorker();
-        long id = snowflakeIdWorker.nextId();
+        String filePath = request.getFilePath();
+//        SnowflakeIdWorker snowflakeIdWorker = new SnowflakeIdWorker();
+//        long id = snowflakeIdWorker.nextId();
+        EsDreUploadDocumentRecord  uploadDocRecord = new EsDreUploadDocumentRecord();
+        uploadDocRecord.setFileName(request.getFileName());
+        uploadDocRecord.setFileType(request.getDocType());
+        uploadDocRecord.setPublishDate(DateUtils.parse(request.getPublishDate(), DateUtils.PATTERN_DAY));
+        uploadDocRecord.setFilePath(filePath);
 
-        String url = esApiConService.ES_URL_DOC_PREFIX + esApiConService.SLASH + id + esApiConService.ES_URL_PIPELINE_DOC_SUFFIX;
         EsUploadDocRequestBean esUploadDocRequestBean = new EsUploadDocRequestBean();
         BeanUtils.copyProperties(request, esUploadDocRequestBean);
         try {
-            String data = FileUtil.encodeBase64File(request.getFilePath());
+            File file = FileUtil.getFile(filePath);
+            uploadDocRecord.setFileSize(FileUtil.getFileSize(file));
+            String data = FileUtil.encodeBase64File(file);
             esUploadDocRequestBean.setData(data);
         } catch (Exception e) {
             logger.error("文件Base64编码错误", e);
@@ -62,7 +74,11 @@ public class DocumentServiceImpl {
             response.setMsg("文件Base64编码错误！");
             return response;
         }
-        logger.info("上传文档到ES-params:{}", JSONObject.toJSONString(request));
+
+        long id = uploadDocumentRecordDao.save(uploadDocRecord);
+        String url = esApiConService.ES_URL_DOC_PREFIX + esApiConService.SLASH + id + esApiConService.ES_URL_PIPELINE_DOC_SUFFIX;
+
+        logger.info("上传文档到ES-params:{}", JSONObject.toJSONString(esUploadDocRequestBean));
         ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.POST, RestTemplateUtil.getRequestBody(esUploadDocRequestBean), String.class);
         response.setResult(result.getBody());
         return response;

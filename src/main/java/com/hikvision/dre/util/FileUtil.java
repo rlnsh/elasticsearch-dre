@@ -12,6 +12,7 @@ import java.util.Base64;
  * @Description: 文件工具类
  */
 public class FileUtil {
+
     /**
      * <p>将文件转成base64 字符串</p>
      * @param path 文件路径
@@ -19,13 +20,41 @@ public class FileUtil {
      * @throws Exception
      */
     public static String encodeBase64File(String path) throws Exception {
-        File file = new File(path);
+        return encodeBase64File(getFile(path));
+    }
+
+    /**
+     * 获取文件
+     * @param path 文件路径
+     * @return
+     */
+    public static File getFile(String path) {
+        return new File(path);
+    }
+
+    /**
+     * <p>将文件转成base64 字符串</p>
+     * @param file 文件
+     * @return
+     * @throws Exception
+     */
+    public static String encodeBase64File(File file) throws Exception {
         FileInputStream inputFile = new FileInputStream(file);
         byte[] buffer = new byte[(int)file.length()];
         inputFile.read(buffer);
         inputFile.close();
         return Base64.getEncoder().encodeToString(buffer);
     }
+
+    /**
+     * 获取文件大小
+     * @param file
+     * @return
+     */
+    public static long getFileSize(File file) {
+        return file.length();
+    }
+
     /**
      * <p>将base64字符解码保存文件</p>
      * @param base64Code
