@@ -1,7 +1,9 @@
 package com.hikvision.dre.webserv;
 
 import com.hikvision.dre.common.BaseController;
+import com.hikvision.dre.dto.doc.request.query.GetDocDetailRequest;
 import com.hikvision.dre.dto.doc.request.query.QueryDocListRequest;
+import com.hikvision.dre.dto.doc.response.query.GetDocDetailResponse;
 import com.hikvision.dre.dto.doc.response.query.QueryDocListResponse;
 import com.hikvision.dre.service.DocumentQueryService;
 import com.hikvision.dre.service.impl.DocumentQueryServiceImpl;
@@ -27,5 +29,15 @@ public class IDocumentQueryService extends BaseController implements DocumentQue
     @Override
     public QueryDocListResponse queryDocList(@RequestBody QueryDocListRequest request) {
         return documentQueryService.queryDocList(request);
+    }
+
+    /**
+     * 获取单个文档详情
+     * @param request
+     * @return
+     */
+    @Override
+    public GetDocDetailResponse getDocDetailById(@RequestBody GetDocDetailRequest request) {
+        return documentQueryService.getDocDetailById(request);
     }
 }

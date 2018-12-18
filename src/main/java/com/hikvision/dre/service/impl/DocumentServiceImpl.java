@@ -15,7 +15,7 @@ import com.hikvision.dre.dto.doc.response.upload.UploadDocumentResponse;
 import com.hikvision.dre.exception.ErrorCode;
 import com.hikvision.dre.util.DateUtils;
 import com.hikvision.dre.util.FileUtil;
-import com.hikvision.dre.util.GenerateSearchApiUtil;
+import com.hikvision.dre.util.GenerateUpdateApiUtil;
 import com.hikvision.dre.util.RestTemplateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,7 +120,7 @@ public class DocumentServiceImpl {
         String url = esApiConService.ES_URL_DOC_PREFIX + esApiConService.SLASH + request.getId() + esApiConService.SLASH + esApiConService.ES_URL_UPDATE_SUFFIX;
         String updateBody;
         try {
-            updateBody = GenerateSearchApiUtil.getScriptedUpdates(request, UpdateDocByIdRequest.class);
+            updateBody = GenerateUpdateApiUtil.getScriptedUpdates(request, UpdateDocByIdRequest.class);
         } catch (IllegalAccessException e) {
             logger.error("生成ES更新语句失败：", e);
             response.setCode(ErrorCode.SELF_PROGRAMER);

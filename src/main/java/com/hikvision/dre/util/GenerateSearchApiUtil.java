@@ -1,6 +1,7 @@
 package com.hikvision.dre.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hikvision.dre.bean.es.dictionary.ESTermsEnum;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -37,16 +38,19 @@ public class GenerateSearchApiUtil {
     }
 
     /**
-     * 根据对象获取update_script
-     * @param o
-     * @param c
+     * 生成query-terms DSL
+     * @param values
+     * @param esTermsEnum
      * @return
      */
-    public static String getScriptedUpdates(Object o, Class<?> c) throws IllegalAccessException {
-        Map<String, Object> updateMap = new HashMap<>();
-        Map<String, Object> scriptMap = genScriptMap(o, c);
-        updateMap.put("script", scriptMap);
-        return JSONObject.toJSONString(updateMap);
+    public static String genQueryTermsDSL(String[] values, ESTermsEnum esTermsEnum) {
+        Map<String, Object> queryMap = new HashMap<>();
+        Map<String, Object> termsMap = new HashMap<>();
+        Map<String, Object> keyMap = new HashMap<>();
+        keyMap.put(esTermsEnum.getKey(), values);
+        termsMap.put("terms", keyMap);
+        queryMap.put("query", termsMap);
+        return JSONObject.toJSONString(queryMap);
     }
 
     /**
@@ -136,37 +140,4 @@ public class GenerateSearchApiUtil {
         return size;
     }
 
-    /**
-     * 生成scriptMap
-     * @param o
-     * @param c
-     * @return
-     * @throws IllegalAccessException
-     */
-    private static Map<String, Object> genScriptMap(Object o, Class<?> c) throws IllegalAccessException {
-        Map<String, Object> scriptMap = new HashMap<>();
-        Map<String, Object> paramsMap = new HashMap<>();
-
-        String source = "";
-        Field[] fields = c.getDeclaredFields( ); // 获取类中的全部定义字段
-        // 循环遍历字段，获取字段相应的属性值
-        for ( Field field : fields ) {
-            String fieldName = field.getName() != null ? field.getName() : "";
-            if ("serialVersionUID".equals(fieldName)) {
-                continue;
-            }
-            field.setAccessible(true); // 假设不为空。设置可见性，然后返回
-            Object fieldValue = field.get(o); // 设置字段可见，就可以用get方法获取属性值。
-            if (!"".equals(fieldName) && fieldValue != null) {
-                source += "ctx._source." + ("content".equals(fieldName) ? "attachment.content" : fieldName) + "=params." + fieldName + ";";
-                paramsMap.put(fieldName, fieldValue);
-            }
-        }
-        if (source.length() > 0) {
-            source = source.substring(0, source.length() - 1);
-        }
-        scriptMap.put("source", source);
-        scriptMap.put("params", paramsMap);
-        return scriptMap;
-    }
 }

@@ -11,7 +11,7 @@ import java.util.Map;
  * @Date: 2018/12/14 14:48
  * @Description: 根据条件检索文档出参
  */
-public class QueryDocListResponse extends AppPagingResponse {
+public class QueryDocListResponse extends AppPagingResponse<QueryDocListResponse.DocInfo> {
 
     private static final long serialVersionUID = 8788617978642223362L;
 
