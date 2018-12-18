@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
@@ -26,6 +27,8 @@ public class EsDreUploadDocumentRecordTest {
     private static final Logger logger = LoggerFactory.getLogger(EsDreUploadDocumentRecordTest.class);
 
     @Autowired private EsDreUploadDocumentRecordRepository uploadDocumentRecordRepository;
+
+    @Autowired private JdbcTemplate jdbcTemplate;
 
     /**
      * 保存文档上传记录
@@ -61,5 +64,15 @@ public class EsDreUploadDocumentRecordTest {
 //            e.printStackTrace();
 //        }
         logger.info("更新完毕....");
+    }
+
+    @Test
+    public void updateRecordByJdbc() {
+        String id = "1074876586158755840";
+        String sql = "UPDATE es_dre_upload_document_record " +
+                " SET file_name = CONCAT(file_name,\".BACKUP\"), version=version+1, modify_time = NOW()" +
+                " WHERE id = ?";
+        int a = jdbcTemplate.update(sql, id);
+        logger.info("a:{}", a);
     }
 }
