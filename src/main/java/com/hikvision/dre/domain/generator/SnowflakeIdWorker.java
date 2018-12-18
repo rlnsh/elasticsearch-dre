@@ -1,7 +1,7 @@
 package com.hikvision.dre.domain.generator;
 
 import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
 import java.io.Serializable;
@@ -20,13 +20,12 @@ import java.io.Serializable;
  */
 public class SnowflakeIdWorker implements IdentifierGenerator{
 
-    @Override
-    public Serializable generate(SessionImplementor session, Object object) throws HibernateException {
-        return SnowflakeIdGenerator.getInstance().nextId();
-    }
-
     public long nextId() {
         return SnowflakeIdGenerator.getInstance().nextId();
     }
 
+    @Override
+    public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException {
+        return SnowflakeIdGenerator.getInstance().nextId();
+    }
 }
