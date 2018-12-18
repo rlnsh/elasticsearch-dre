@@ -15,4 +15,11 @@ public interface EsDreUploadDocumentRecordDao {
      * @return
      */
     long save(EsDreUploadDocumentRecord record);
+
+    /**
+     * 根据id删除记录
+     * @param id 记录id
+     */
+    void delete(Long id);
+
 }

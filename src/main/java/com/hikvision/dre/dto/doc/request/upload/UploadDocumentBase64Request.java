@@ -24,7 +24,7 @@ public class UploadDocumentBase64Request extends AppRequest {
     private String data;
 
     /**
-     * 文件大小
+     * 文件大小 单位:Byte
      */
     @NotNull(message = "文件大小不能为空！")
     private Long fileSize;

@@ -5,6 +5,7 @@ import com.hikvision.dre.bean.es.upload.request.EsUploadDocRequestBean;
 import com.hikvision.dre.common.ESApiConstantsService;
 import com.hikvision.dre.dao.EsDreUploadDocumentRecordDao;
 import com.hikvision.dre.domain.entity.EsDreUploadDocumentRecord;
+import com.hikvision.dre.domain.repository.EsDreUploadDocumentRecordRepository;
 import com.hikvision.dre.dto.doc.request.DeleteDocByIdRequest;
 import com.hikvision.dre.dto.doc.request.UpdateDocByIdRequest;
 import com.hikvision.dre.dto.doc.request.upload.UploadDocumentBase64Request;
@@ -28,6 +29,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * @Auther: wangdingding5
@@ -45,6 +47,8 @@ public class DocumentServiceImpl {
     @Autowired private ESApiConstantsService esApiConService;
 
     @Autowired private EsDreUploadDocumentRecordDao uploadDocumentRecordDao;
+
+    @Autowired private EsDreUploadDocumentRecordRepository uploadDocRepository;
 
     /**
      * 上传文档数据到ES
@@ -140,11 +144,21 @@ public class DocumentServiceImpl {
      */
     public DeleteDocByIdResponse deleteDocById(DeleteDocByIdRequest request) {
         DeleteDocByIdResponse response = new DeleteDocByIdResponse();
-        if (request.getId() == null) {
+        String id = request.getId();
+        if (id == null) {
             response.setCode(ErrorCode.FORM_ERROR);
             response.setMsg("文档id不能为空!");
         }
-        String url = esApiConService.ES_URL_DOC_PREFIX + esApiConService.SLASH + request.getId();
+        EsDreUploadDocumentRecord record = uploadDocRepository.getById(Long.valueOf(id), 1);
+        if (record == null) {
+            response.setCode(ErrorCode.FORM_ERROR);
+            response.setMsg("不存在此文档！");
+            return response;
+        }
+        record.setStatus(0);
+        uploadDocumentRecordDao.save(record);
+
+        String url = esApiConService.ES_URL_DOC_PREFIX + esApiConService.SLASH + id;
 
         ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
         response.setData(result.getBody());

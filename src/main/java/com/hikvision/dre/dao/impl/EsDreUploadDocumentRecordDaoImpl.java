@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class EsDreUploadDocumentRecordDaoImpl implements EsDreUploadDocumentRecordDao {
 
-    @Autowired private EsDreUploadDocumentRecordRepository uploadDocRespository;
+    @Autowired private EsDreUploadDocumentRecordRepository uploadDocRepository;
 
     /**
      * 保存上传文档到ES记录
@@ -25,7 +25,17 @@ public class EsDreUploadDocumentRecordDaoImpl implements EsDreUploadDocumentReco
      */
     @Override
     public long save(EsDreUploadDocumentRecord record) {
-        uploadDocRespository.save(record);
+        uploadDocRepository.save(record);
         return record.getId();
     }
+
+    /**
+     * 根据id删除记录
+     * @param id 记录id
+     */
+    @Override
+    public void delete(Long id) {
+        uploadDocRepository.deleteById(id);
+    }
+
 }
