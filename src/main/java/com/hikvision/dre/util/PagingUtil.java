@@ -88,7 +88,7 @@ public class PagingUtil {
         long jdCount = bean.getHits().getTotal() != null ? bean.getHits().getTotal() : 0;
         prop.setPageCount(jdCount % request.getSize() == 0 ? jdCount / request.getSize() : jdCount / request.getSize() + 1);
         prop.setTotal(jdCount);
-        resp.setData(prop);
+        resp.setPageProp(prop);
     }
 
 

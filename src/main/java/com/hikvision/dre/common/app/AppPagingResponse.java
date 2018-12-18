@@ -8,15 +8,28 @@ import java.util.List;
  * @Date: 2018/12/13 20:40
  * @Description: 出参基类-分页
  */
-public abstract class AppPagingResponse<E extends Serializable> extends AppResponse<PageProp> {
+public abstract class AppPagingResponse<E extends Serializable> extends BaseResponse{
 
-    protected List<E> results;
+    /**
+     * 分页信息
+     */
+    protected PageProp pageProp;
 
-    public List<E> getResults() {
-        return results;
+    protected List<E> data;
+
+    public PageProp getPageProp() {
+        return pageProp;
     }
 
-    public void setResults(List<E> results) {
-        this.results = results;
+    public void setPageProp(PageProp pageProp) {
+        this.pageProp = pageProp;
+    }
+
+    public List<E> getData() {
+        return data;
+    }
+
+    public void setData(List<E> data) {
+        this.data = data;
     }
 }
