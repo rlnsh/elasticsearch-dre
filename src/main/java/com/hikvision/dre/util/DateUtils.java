@@ -11,7 +11,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-
+/**
+ * @Auther: wangdingding5
+ * @Date: 2018/12/14 15:34
+ * @Description: 日期工具类
+ */
 public class DateUtils {
 
 	private static final Logger logger = LoggerFactory.getLogger(DateUtils.class);

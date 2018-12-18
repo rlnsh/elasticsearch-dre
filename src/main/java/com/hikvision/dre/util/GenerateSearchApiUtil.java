@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @Auther: wangdingding5
  * @Date: 2018/12/14 15:34
- * @Description:
+ * @Description: 生成ES查询语句工具类
  */
 public class GenerateSearchApiUtil {
 

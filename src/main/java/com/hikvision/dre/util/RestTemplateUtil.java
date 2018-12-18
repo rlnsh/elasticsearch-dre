@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 /**
  * @Auther: wangdingding5
  * @Date: 2018/12/14 11:50
- * @Description:
+ * @Description: RestTemplate工具类
  */
 public class RestTemplateUtil {
 
