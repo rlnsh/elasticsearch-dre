@@ -149,7 +149,7 @@ public class DocumentServiceImpl {
             response.setCode(ErrorCode.FORM_ERROR);
             response.setMsg("文档id不能为空!");
         }
-        EsDreUploadDocumentRecord record = uploadDocRepository.getById(Long.valueOf(id), 1);
+        EsDreUploadDocumentRecord record = uploadDocRepository.findByIdAndStatus(Long.valueOf(id), 1);
         if (record == null) {
             response.setCode(ErrorCode.FORM_ERROR);
             response.setMsg("不存在此文档！");

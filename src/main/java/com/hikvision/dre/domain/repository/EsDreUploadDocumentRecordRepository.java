@@ -14,10 +14,20 @@ public interface EsDreUploadDocumentRecordRepository extends JpaRepository<EsDre
 
     /**
      * 根据id,status查询
+     * 使用命名化参数，使用@Param
      * @param id
      * @param status
      * @return
      */
     @Query("select r from  EsDreUploadDocumentRecord r where r.id = :id and r.status = :status")
     EsDreUploadDocumentRecord getById(@Param("id") Long id, @Param("status") Integer status);
+
+    /**
+     * 根据id,status查询
+     * JpaRepository支持接口规范方法名查询。意思是如果在接口中定义的查询方法符合它的命名规则，就可以不用写实现
+     * @param id
+     * @param status
+     * @return
+     */
+    EsDreUploadDocumentRecord findByIdAndStatus(Long id, Integer status);
 }
