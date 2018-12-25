@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -34,6 +35,7 @@ public class EsDreUploadDocumentRecordTest {
      * 保存文档上传记录
      */
     @Test
+    @Transactional
     public void saveEsDreIndex() {
         EsDreUploadDocumentRecord record = new EsDreUploadDocumentRecord();
         record.setFileName("新员工入职指南");
@@ -42,6 +44,8 @@ public class EsDreUploadDocumentRecordTest {
         record.setFileSize(284001L);
         record.setPublishDate(new Date());
         uploadDocumentRecordRepository.save(record);
+
+        int a = 1/0;
     }
 
     /**
