@@ -38,9 +38,8 @@ public class ESQueryApiService {
      */
     public ESQueryResponseBean boolMustQueryPage(AppPagingRequest request, Class c) throws IllegalAccessException {
         String url = esApiConService.ES_URL_DOC_PREFIX + esApiConService.SLASH + esApiConService.ES_URL_SEARCH_SUFFIX;
-        String queryBody;
         PagingUtil.updatePageRequest(request);
-        queryBody = GenerateSearchApiUtil.getBoolMustQueryDSL(request, c);
+        String queryBody = GenerateSearchApiUtil.getBoolMustQueryDSL(request, c);
         return queryES(url, HttpMethod.POST, queryBody);
     }
 
@@ -52,8 +51,7 @@ public class ESQueryApiService {
      */
     public ESQueryResponseBean queryTerms(String[] values, ESTermsEnum esTermsEnum) {
         String url = esApiConService.ES_URL_DOC_PREFIX + esApiConService.SLASH + esApiConService.ES_URL_SEARCH_SUFFIX;
-        String queryBody;
-        queryBody = GenerateSearchApiUtil.genQueryTermsDSL(values, esTermsEnum);
+        String queryBody = GenerateSearchApiUtil.genQueryTermsDSL(values, esTermsEnum);
         return queryES(url, HttpMethod.POST, queryBody);
     }
 
