@@ -79,7 +79,7 @@ public class DocumentQueryServiceImpl {
         ESQueryResponseBean esQueryResponseBean = esQueryApiService.queryTerms(ids, ESTermsEnum.ID);
         Hits hits = esQueryResponseBean.getHits();
         List<Hits.Hit> hitList = hits.getHits();
-        Hits.Hit hit = hitList.get(0);
+        Hits.Hit hit = hitList.size() > 0 ? hitList.get(0) : new Hits.Hit();
         Map<String, Object> source = hit.get_source();
         GetDocDetailResponse.DocDetailInfo docDetailInfo = JSONArray.parseObject(JSONObject.toJSONString(source), GetDocDetailResponse.DocDetailInfo.class);
         response.setData(docDetailInfo);
