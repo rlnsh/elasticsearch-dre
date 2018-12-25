@@ -23,9 +23,9 @@ spring:
 #数据源配置
 dre:
   datasource:
-    url: jdbc:mysql://10.14.69.48:3306/es_dre_db?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/es_dre_db?useUnicode=true&characterEncoding=utf-8
     username: root
-    password: hik12345+
+    password: 123456
     driver-class-name: com.mysql.jdbc.Driver
 
 #RestTemplate配置
@@ -37,8 +37,11 @@ remote:
 
 #es相关
 es:
-  url: http://10.14.69.82:9200 #es服务地址
+#  url: http://localhost:9200 #es服务地址
+  url: http://es-cn-0pp0xgmc90002c8jz.public.elasticsearch.aliyuncs.com:9200 #es服务地址
+  userName: elastic #es用户名
+  password: 20181203Wdd #//es密码
   doc:
-    pipelineName: attachment #管道名称
-    indexName: hkvs #索引名称
+    pipelineName: wangdd #管道名称
+    indexName: wangdd #索引名称
     indexType: doc #索引类型

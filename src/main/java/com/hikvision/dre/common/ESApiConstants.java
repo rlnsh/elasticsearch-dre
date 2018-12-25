@@ -13,6 +13,10 @@ public class ESApiConstants {
 
     public static String ES_URL; //es服务地址
 
+    public static String USER_NAME; //es用户名
+
+    public static String PASSWORD; //es密码
+
     public static String PIPELINE_NAME_DOC; //管道名称
 
     public static String INDEX_NAME_DOC; //索引名称
@@ -22,6 +26,16 @@ public class ESApiConstants {
     @Value("${es.url}")
     public void setEsUrl(String esUrl) {
         ES_URL = esUrl;
+    }
+
+    @Value("${es.userName}")
+    public void setUserName(String userName) {
+        USER_NAME = userName;
+    }
+
+    @Value("${es.password}")
+    public void setPASSWORD(String PASSWORD) {
+        ESApiConstants.PASSWORD = PASSWORD;
     }
 
     @Value("${es.doc.pipelineName}")
