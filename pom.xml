@@ -111,16 +111,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <format>xml</format>
-                    <encoding>utf-8</encoding>
-                    <instrumentation>
-                        <includes>
-                            <include>com/hikvision/es-dre/**/*.class</include>
-                        </includes>
-                    </instrumentation>
-                </configuration>
+                <version>2.7</version>
             </plugin>
         </plugins>
     </build>
