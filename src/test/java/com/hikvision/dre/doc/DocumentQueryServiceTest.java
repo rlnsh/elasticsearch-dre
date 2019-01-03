@@ -1,6 +1,8 @@
 package com.hikvision.dre.doc;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hikvision.dre.domain.entity.EsDreUploadDocumentRecord;
+import com.hikvision.dre.domain.repository.EsDreUploadDocumentRecordRepository;
 import com.hikvision.dre.dto.doc.request.query.QueryDocListRequest;
 import com.hikvision.dre.dto.doc.response.query.QueryDocListResponse;
 import com.hikvision.dre.service.DocumentQueryService;
@@ -11,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 /**
  * @Auther: wangdingding5
@@ -25,6 +29,8 @@ public class DocumentQueryServiceTest {
 
     @Autowired private DocumentQueryService documentQueryService;
 
+    @Autowired private EsDreUploadDocumentRecordRepository uploadDocumentRecordRepository;
+
     /**
      * 根据条件查询文档列表
      */
@@ -36,5 +42,12 @@ public class DocumentQueryServiceTest {
         request.setContent("海康");
         QueryDocListResponse response = documentQueryService.queryDocList(request);
         logger.info("返回结果：{}", JSONObject.toJSONString(response));
+    }
+
+    @Test
+    public void queryEsDreUploadDocTest() {
+        List<EsDreUploadDocumentRecord> list = uploadDocumentRecordRepository.findAll();
+
+        logger.info("返回结果：{}", JSONObject.toJSONString(list));
     }
 }

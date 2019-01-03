@@ -73,4 +73,15 @@
 		 <appender-ref ref="logstash"/>
 		<appender-ref ref="flatfile"/>
 	</root>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!--JdbcTemplate的日志输出器 -->
+  <logger name="org.springframework.jdbc.core" additivity="true">
+		<level value="DEBUG" />
+	  <appender-ref ref="STDOUT"/>
+  </logger>
 </configuration>
