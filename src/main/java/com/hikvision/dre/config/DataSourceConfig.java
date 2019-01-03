@@ -24,6 +24,20 @@ public class DataSourceConfig {
         dataSource.setUrl(dataBasePropertiesConfig.getUrl());
         dataSource.setUsername(dataBasePropertiesConfig.getUsername());
         dataSource.setPassword(dataBasePropertiesConfig.getPassword());
+
+        dataSource.setInitialSize(dataBasePropertiesConfig.getInitialSize());
+        dataSource.setMaxActive(dataBasePropertiesConfig.getMaxActive());
+
+        dataSource.setMaxWait(dataBasePropertiesConfig.getMaxWait());
+        dataSource.setTimeBetweenEvictionRunsMillis(dataBasePropertiesConfig.getTimeBetweenEvictionRunsMillis());
+        dataSource.setMinEvictableIdleTimeMillis(dataBasePropertiesConfig.getMinEvictableIdleTimeMillis());
+
+        dataSource.setValidationQuery(dataBasePropertiesConfig.getValidationQuery());
+        dataSource.setTestWhileIdle(dataBasePropertiesConfig.isTestWhileIdle());
+        dataSource.setTestOnBorrow(dataBasePropertiesConfig.isTestOnBorrow());
+        dataSource.setTestOnReturn(dataBasePropertiesConfig.isTestOnReturn());
+
+        dataSource.setPoolPreparedStatements(dataBasePropertiesConfig.isPoolPreparedStatements());
         return dataSource;
     }
 
