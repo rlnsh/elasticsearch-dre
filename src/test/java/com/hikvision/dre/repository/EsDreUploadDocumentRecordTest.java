@@ -44,8 +44,6 @@ public class EsDreUploadDocumentRecordTest {
         record.setFileSize(284001L);
         record.setPublishDate(new Date());
         uploadDocumentRecordRepository.save(record);
-
-        int a = 1/0;
     }
 
     /**

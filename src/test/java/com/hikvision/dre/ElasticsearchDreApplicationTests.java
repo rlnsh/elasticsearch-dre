@@ -27,7 +27,7 @@ public class ElasticsearchDreApplicationTests {
 
     @Test
     public void queryESTest() {
-        String url = ESApiConstants.ES_URL + esApiConService.SLASH + "_cat/indices?v";
+        String url = ESApiConstants.getEsUrl() + esApiConService.SLASH + "_cat/indices?v";
         String queryBody = "{}";
         logger.info("ES-检索body:{}", queryBody);
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, RestTemplateUtil.getRequestBody(queryBody), String.class);

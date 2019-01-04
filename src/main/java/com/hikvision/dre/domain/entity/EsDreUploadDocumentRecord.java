@@ -98,10 +98,10 @@ public class EsDreUploadDocumentRecord extends BaseEntity {
     }
 
     public Date getPublishDate() {
-        return publishDate;
+        return (Date) publishDate.clone();
     }
 
     public void setPublishDate(Date publishDate) {
-        this.publishDate = publishDate;
+        this.publishDate = (Date) publishDate.clone();
     }
 }

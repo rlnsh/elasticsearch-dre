@@ -6,6 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Base64;
 
@@ -21,7 +22,7 @@ public class RestTemplateUtil {
         MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
         headers.setContentType(type);
         headers.add("Accept", MediaType.APPLICATION_JSON.toString());
-        headers.add("Authorization", getHeader(ESApiConstants.USER_NAME, ESApiConstants.PASSWORD));
+        headers.add("Authorization", getHeader(ESApiConstants.getUserName(), ESApiConstants.getPASSWORD()));
         return new HttpEntity<>(requestStr, headers);
     }
 
@@ -33,7 +34,12 @@ public class RestTemplateUtil {
     private static String getHeader(String userName, String password) {
         String auth = userName + ":" + password;
         byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(Charset.forName("US-ASCII")));
-        String authHeader = "Basic " + new String(encodedAuth);
+        String authHeader = null;
+        try {
+            authHeader = "Basic " + new String(encodedAuth, "US-ASCII");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return authHeader;
     }
 }

@@ -42,19 +42,19 @@ public abstract class BaseEntity{
     }
 
     public Date getCreateTime() {
-        return this.createTime;
+        return (Date) this.createTime.clone();
     }
 
     public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+        this.createTime = (Date) createTime.clone();
     }
 
     public Date getModifyTime() {
-        return this.modifyTime;
+        return (Date) this.modifyTime.clone();
     }
 
     public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
+        this.modifyTime = (Date) modifyTime.clone();
     }
 
     public int getVersion() {

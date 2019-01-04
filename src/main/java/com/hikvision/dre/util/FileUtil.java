@@ -5,7 +5,9 @@ import org.apache.commons.lang3.RandomUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
@@ -43,12 +45,27 @@ public class FileUtil {
      * @return
      * @throws Exception
      */
-    public static String encodeBase64File(File file) throws Exception {
-        FileInputStream inputFile = new FileInputStream(file);
-        byte[] buffer = new byte[(int)file.length()];
-        inputFile.read(buffer);
-        inputFile.close();
-        return Base64.getEncoder().encodeToString(buffer);
+    public static String encodeBase64File(File file) {
+        FileInputStream inputFile = null;
+        try {
+            inputFile = new FileInputStream(file);
+            byte[] buffer = new byte[(int)file.length()];
+            inputFile.read(buffer);
+            return Base64.getEncoder().encodeToString(buffer);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inputFile != null) {
+                    inputFile.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
     }
 
     /**
@@ -66,32 +83,30 @@ public class FileUtil {
      * @param targetPath
      * @throws Exception
      */
-    public static void decoderBase64File(String base64Code,String targetPath) throws Exception {
+    public static void decoderBase64File(String base64Code,String targetPath) {
         byte[] buffer = Base64.getDecoder().decode(base64Code);
-        FileOutputStream out = new FileOutputStream(targetPath);
-        out.write(buffer);
-        out.close();
+        writeByteToFileOutPutStream(buffer, targetPath);
     }
-    /**
-     * <p>将base64字符保存文本文件</p>
-     * @param base64Code
-     * @param targetPath
-     * @throws Exception
-     */
-    public static void toFile(String base64Code,String targetPath) throws Exception {
-        byte[] buffer = base64Code.getBytes();
-        FileOutputStream out = new FileOutputStream(targetPath);
-        out.write(buffer);
-        out.close();
+
+    private static void writeByteToFileOutPutStream(byte[] buffer, String targetPath) {
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(targetPath);
+            out.write(buffer);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
     public static void main(String[] args) {
-        try {
-            String base64Code =encodeBase64File("/Users/Crazy/Pictures/zyb2.jpg");
-            System.out.println(base64Code);
-            decoderBase64File(base64Code, "/Users/Crazy/Desktop/zyb.png");
-            toFile(base64Code, "/Users/Crazy/Desktop/zyb.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

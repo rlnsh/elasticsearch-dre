@@ -69,7 +69,7 @@ public class PagingUtil {
      * @param request
      */
     public static void updatePageRequest(AppPagingRequest request) {
-        request.setFrom((long) (request.getPageIndex() * request.getPageSize()));
+        request.setFrom(request.getPageIndex() * request.getPageSize());
         request.setSize(request.getPageSize());
     }
 

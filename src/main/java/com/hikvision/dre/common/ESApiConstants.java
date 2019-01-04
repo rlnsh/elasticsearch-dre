@@ -11,46 +11,69 @@ import org.springframework.stereotype.Component;
 @Component
 public class ESApiConstants {
 
-    public static String ES_URL; //es服务地址
+    private static String ES_URL; //es服务地址
 
-    public static String USER_NAME; //es用户名
+    private static String USER_NAME; //es用户名
 
-    public static String PASSWORD; //es密码
+    private static String PASSWORD; //es密码
 
-    public static String PIPELINE_NAME_DOC; //管道名称
+    private static String PIPELINE_NAME_DOC; //管道名称
 
-    public static String INDEX_NAME_DOC; //索引名称
+    private static String INDEX_NAME_DOC; //索引名称
 
-    public static String INDEX_TYPE_DOC; //索引类型
+    private static String INDEX_TYPE_DOC; //索引类型
 
     @Value("${es.url}")
-    public void setEsUrl(String esUrl) {
+    private void setEsUrl(String esUrl) {
         ES_URL = esUrl;
     }
 
     @Value("${es.userName}")
-    public void setUserName(String userName) {
+    private void setUserName(String userName) {
         USER_NAME = userName;
     }
 
     @Value("${es.password}")
-    public void setPASSWORD(String PASSWORD) {
+    private void setPASSWORD(String PASSWORD) {
         ESApiConstants.PASSWORD = PASSWORD;
     }
 
     @Value("${es.doc.pipelineName}")
-    public void setPipelineNameDoc(String pipelineNameDoc) {
+    private void setPipelineNameDoc(String pipelineNameDoc) {
         PIPELINE_NAME_DOC = pipelineNameDoc;
     }
 
     @Value("${es.doc.indexName}")
-    public void setIndexNameDoc(String indexNameDoc) {
+    private void setIndexNameDoc(String indexNameDoc) {
         INDEX_NAME_DOC = indexNameDoc;
     }
 
     @Value("${es.doc.indexType}")
-    public void setIndexTypeDoc(String indexTypeDoc) {
+    private void setIndexTypeDoc(String indexTypeDoc) {
         INDEX_TYPE_DOC = indexTypeDoc;
     }
 
+    public static String getEsUrl() {
+        return ES_URL;
+    }
+
+    public static String getUserName() {
+        return USER_NAME;
+    }
+
+    public static String getPASSWORD() {
+        return PASSWORD;
+    }
+
+    public static String getPipelineNameDoc() {
+        return PIPELINE_NAME_DOC;
+    }
+
+    public static String getIndexNameDoc() {
+        return INDEX_NAME_DOC;
+    }
+
+    public static String getIndexTypeDoc() {
+        return INDEX_TYPE_DOC;
+    }
 }

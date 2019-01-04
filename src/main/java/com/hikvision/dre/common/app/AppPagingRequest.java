@@ -11,45 +11,42 @@ public abstract class AppPagingRequest extends AppRequest {
 
     private static final long serialVersionUID = -6907842080246753978L;
 
-    protected Integer pageIndex;
+    protected long pageIndex = 0;
 
-    protected Integer pageSize = 10;
+    protected long pageSize = 10L;
 
-    protected Long from = 0L;
+    protected long from = 0L;
 
-    protected Integer size = 10;
+    protected long size = 10L;
 
-    protected String requestId = UUID.randomUUID().toString();
-
-    public Integer getPageIndex() {
-        return this.pageIndex == null ? (int)(this.from / (long)this.getSize()) : this.pageIndex;
+    public long getPageIndex() {
+        return this.pageIndex;
     }
 
-    public void setPageIndex(Integer pageIndex) {
+    public void setPageIndex(Long pageIndex) {
         this.pageIndex = pageIndex;
     }
 
-    public Integer getPageSize() {
-        return this.pageSize != null ? this.pageSize : this.size;
+    public long getPageSize() {
+        return this.pageSize;
     }
 
-    public void setPageSize(Integer pageSize) {
+    public void setPageSize(long pageSize) {
         this.pageSize = pageSize;
     }
 
-    public Long getFrom() {
-        return this.from == null ? (long)(this.pageIndex * this.getPageSize()) : this.from;
+    public long getFrom() {
+        return this.pageIndex * this.getPageSize();
     }
-
-    public void setFrom(Long from) {
+    public void setFrom(long from) {
         this.from = from;
     }
 
-    public Integer getSize() {
-        return this.size == null ? this.pageSize : this.size;
+    public long getSize() {
+        return this.size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(long size) {
         this.size = size;
     }
 }

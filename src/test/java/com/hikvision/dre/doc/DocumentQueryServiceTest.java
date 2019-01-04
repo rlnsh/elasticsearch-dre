@@ -37,8 +37,8 @@ public class DocumentQueryServiceTest {
     @Test
     public void queryDocListTest() {
         QueryDocListRequest request = new QueryDocListRequest();
-        request.setPageIndex(1);
-        request.setPageSize(2);
+        request.setPageIndex(1L);
+        request.setPageSize(2L);
         request.setContent("海康");
         QueryDocListResponse response = documentQueryService.queryDocList(request);
         logger.info("返回结果：{}", JSONObject.toJSONString(response));

@@ -22,7 +22,7 @@ public class PageProp implements Serializable {
     /**
      * 每页多少条
      */
-    private Integer pageSize;
+    private long pageSize;
 
     /**
      * 总共多少条
@@ -50,11 +50,11 @@ public class PageProp implements Serializable {
         this.pageIndex = pageIndex;
     }
 
-    public Integer getPageSize() {
+    public long getPageSize() {
         return pageSize;
     }
 
-    public void setPageSize(Integer pageSize) {
+    public void setPageSize(Long pageSize) {
         this.pageSize = pageSize;
     }
 

@@ -26,8 +26,21 @@ public class DateUtils {
 	public static final String PATTERN_ONLYTIME = "HH:mm:ss";
 	public static final String PATTERN_ONLMIN = "HH:mm";
 	
-	static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	/**
+	 * 得到yyyy-MM-dd HH:mm:ss格式的SimpleDateFormat
+	 * @return
+	 */
+	public static SimpleDateFormat getDf() {
+		return new SimpleDateFormat(PATTERN_TIME);
+	}
+
+	/**
+	 * 得到yyyy-MM-dd HH:mm:ss格式的SimpleDateFormat
+	 * @return
+	 */
+	public static SimpleDateFormat getSdf() {
+		return new SimpleDateFormat(PATTERN_DAY);
+	}
 
 	/**
 	 * 指定日期年初
@@ -132,6 +145,7 @@ public class DateUtils {
 	public static Date getDayBegin(Date date){
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
+
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
@@ -141,7 +155,7 @@ public class DateUtils {
 	}
 	public static Date getDayBegin(String date){
 		try {
-			return getDayBegin(sdf.parse(date));
+			return getDayBegin(getSdf().parse(date));
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return null;
@@ -160,7 +174,7 @@ public class DateUtils {
 	
 	public static Date getDayEnd(String date){
 		try {
-			return getDayEnd(sdf.parse(date));
+			return getDayEnd(getSdf().parse(date));
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return null;
@@ -170,7 +184,7 @@ public class DateUtils {
 	public static Date getHourBegin(String date,int hour){
 		try {
 			Calendar c = Calendar.getInstance();
-			c.setTime(sdf.parse(date));
+			c.setTime(getSdf().parse(date));
 			c.set(Calendar.HOUR_OF_DAY, hour);
 			c.set(Calendar.MINUTE, 0);
 			c.set(Calendar.SECOND, 0);
@@ -184,7 +198,7 @@ public class DateUtils {
 	public static Date getHourEnd(String date,int hour){
 		try {
 			Calendar c = Calendar.getInstance();
-			c.setTime(sdf.parse(date));
+			c.setTime(getSdf().parse(date));
 			c.set(Calendar.HOUR_OF_DAY, hour);
 			c.set(Calendar.MINUTE, 59);
 			c.set(Calendar.SECOND, 59);
@@ -274,7 +288,7 @@ public class DateUtils {
 	public static String format(Date in){
 		if(null==in) 
 			return null;
-		return df.format(in);
+		return getDf().format(in);
 	}
 	
 	public static String format(Date in,String pattern){
@@ -302,14 +316,6 @@ public class DateUtils {
 			return str;
 		}
 	}
-	
-	/*public static String between(Date min,Date max){
-		Calendar c = Calendar.getInstance();
-		c.setTime(min);
-		int yMin = c.get(Calendar.YEAR);
-		int mMin = c.get(Calendar.MONTH);
-		int dMin = c.get(Calendar.DAY_OF_MONTH);
-	}*/
 	
 	public static long betweenDay(Date min,Date max){
 		return (max.getTime()-min.getTime())/(1000*3600*24);
@@ -368,60 +374,11 @@ public class DateUtils {
 		int mMax = c.get(Calendar.MONTH);
 		return (yMax-yMin)*12+(mMax-mMin);
 	}
-	
-	public static String babyDesc(Date dueDate,Date birth){
-		//dueDate = getYmd(dueDate);
-		
-		Date now = getYmd(new Date());
-		if(null==dueDate && null==birth){
-			return "你还未填写宝宝信息";
-		}else if(birth != null){
-			birth = getYmd(birth);
-			Date manyue = add(birth,Calendar.MONTH,1);
-			Date zhousui = add(birth,Calendar.YEAR,1);
-			if(now.compareTo(manyue)<0){//小于1个月
-				return "宝宝出生"+betweenDay(birth,now)+"天了";
-			}else if(now.compareTo(manyue)==0){//等于1个月
-				return "您的宝宝今天满月了";
-			}else if(now.compareTo(manyue)>0 && now.compareTo(zhousui)<0){//大于1个月小于1年
-				long day = betweenDayExcludeMonth(birth,now);
-				if(0==day){
-					return "宝宝出生"+betweenMonth(birth,now)+"个月了";
-				}else{
-					return "宝宝出生"+betweenMonth(birth,now)+"个月"+day+"天了";
-				}				
-			}else if(now.compareTo(zhousui)==0){//等于1年
-				return "今天是您的宝宝周岁生日哦";
-			}else{//大于1年
-				long month = betweenMonthExcludeYear(birth,now);
-				long left = month%12;
-				if(0==left){
-					return "宝宝"+month/12+"周岁了";
-				}else{
-					return "宝宝"+month/12+"周岁"+left+"个月了";
-				}
-				
-			}
-		}else{
-			if(dueDate.compareTo(now)>=0){
-				long day = betweenDay(now,dueDate);
-				if(0==day){
-					return "宝宝今天就要出生了,注意哦！";
-				}else{
-					return "宝宝还有"+day+"天就要出生了";
-				}
-			}else{
-				long day = betweenDay(dueDate,now);
-				return "宝宝已经出生"+day+"天了,快去完善宝宝信息吧！";
-			}
-			
-		}
-	}
-	
+
 	public static String dateFormat(Date in){
 		if(null==in) 
 			return null;
-		return sdf.format(in);
+		return getSdf().format(in);
 	}
 
 	/**
@@ -603,7 +560,7 @@ public class DateUtils {
 		cal.setFirstDayOfWeek(Calendar.MONDAY); // 设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
 		int day = cal.get(Calendar.DAY_OF_WEEK); // 获得当前日期是一个星期的第几天
 		cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day + interval); // 根据日历的规则，给当前日期减去星期几与一个星期第一天的差值
-		logger.info("返回日期：" + sdf.format(cal.getTime()));
+		logger.info("返回日期：" + getSdf().format(cal.getTime()));
 		return cal.getTime();
 	}
 
@@ -632,7 +589,7 @@ public class DateUtils {
 		cal.setFirstDayOfWeek(Calendar.MONDAY); // 设置一个星期的第一天，按中国的习惯一个星期的第一天是星期一
 		int day = cal.get(Calendar.DAY_OF_WEEK); // 获得当前日期是一个星期的第几天
 		cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day - 7 + interval); // 根据日历的规则，给当前日期减去星期几与一个星期第一天的差值
-		logger.info("返回日期：" + sdf.format(cal.getTime()));
+		logger.info("返回日期：" + getSdf().format(cal.getTime()));
 		return cal.getTime();
 	}
 
@@ -714,7 +671,7 @@ public class DateUtils {
 
 	public static void main(String[] args) {
 		Date now = new Date();
-//		System.out.println(format(dateDayBegin(now),"yyyy-MM-dd HH:mm:ss.SSS"));
+		System.out.println(format(dateDayBegin(now),"yyyy-MM-dd HH:mm:ss.SSS"));
 //		System.out.println(format(dateDayEnd(now),"yyyy-MM-dd HH:mm:ss.SSS"));
 //		System.out.println(format(add(now,Calendar.YEAR,1),"yyyy-MM-dd HH:mm:ss.SSS"));
 		String dateStr = "2018-04-23 00:00:00";

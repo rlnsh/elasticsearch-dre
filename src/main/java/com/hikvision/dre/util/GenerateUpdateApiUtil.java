@@ -37,7 +37,7 @@ public class GenerateUpdateApiUtil {
         Map<String, Object> scriptMap = new HashMap<>();
         Map<String, Object> paramsMap = new HashMap<>();
 
-        String source = "";
+        StringBuffer stringBuffer = new StringBuffer();
         Field[] fields = c.getDeclaredFields( ); // 获取类中的全部定义字段
         // 循环遍历字段，获取字段相应的属性值
         for ( Field field : fields ) {
@@ -48,10 +48,16 @@ public class GenerateUpdateApiUtil {
             field.setAccessible(true); // 假设不为空。设置可见性，然后返回
             Object fieldValue = field.get(o); // 设置字段可见，就可以用get方法获取属性值。
             if (!"".equals(fieldName) && fieldValue != null) {
-                source += "ctx._source." + ("content".equals(fieldName) ? "attachment.content" : fieldName) + "=params." + fieldName + ";";
+//                source += "ctx._source." + ("content".equals(fieldName) ? "attachment.content" : fieldName) + "=params." + fieldName + ";";
+                stringBuffer.append("ctx._source.");
+                stringBuffer.append("content".equals(fieldName) ? "attachment.content" : fieldName);
+                stringBuffer.append("=params.");
+                stringBuffer.append(fieldName);
+                stringBuffer.append(";");
                 paramsMap.put(fieldName, fieldValue);
             }
         }
+        String source = stringBuffer.toString();
         if (source.length() > 0) {
             source = source.substring(0, source.length() - 1);
         }

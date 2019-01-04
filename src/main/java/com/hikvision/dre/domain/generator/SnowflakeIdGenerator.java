@@ -1,8 +1,10 @@
 package com.hikvision.dre.domain.generator;
 
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.UnknownHostException;
 
 /**
  * Twitter_Snowflake<br>
@@ -17,22 +19,22 @@ import java.net.NetworkInterface;
  * SnowFlake的优点是，整体上按照时间自增排序，并且整个分布式系统内不会产生ID碰撞(由数据中心ID和机器ID作区分)，并且效率较高，经测试，SnowFlake每秒能够产生26万ID左右。
  */
 public class SnowflakeIdGenerator{
-    private static SnowflakeIdGenerator instance=null;
+    private volatile static SnowflakeIdGenerator instance=null;
 
    // private static final Logger logger = LoggerFactory.getLogger(SnowflakeIdWorker.class);
 
     /* 时间起始标记点，作为基准，一般取系统的最近时间（一旦确定不能变动） */
-    private final long twepoch = 1288834974657L;
-    private final long workerIdBits = 5L;/* 机器标识位数 */
-    private final long datacenterIdBits = 5L;
-    private final long maxWorkerId = -1L ^ (-1L << workerIdBits);
-    private final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
-    private final long sequenceBits = 12L;/* 毫秒内自增位 */
-    private final long workerIdShift = sequenceBits;
-    private final long datacenterIdShift = sequenceBits + workerIdBits;
+    private static final long twepoch = 1288834974657L;
+    private static final long workerIdBits = 5L;/* 机器标识位数 */
+    private static final long datacenterIdBits = 5L;
+    private static final long maxWorkerId = -1L ^ (-1L << workerIdBits);
+    private static final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
+    private static final long sequenceBits = 12L;/* 毫秒内自增位 */
+    private static final long workerIdShift = sequenceBits;
+    private static final long datacenterIdShift = sequenceBits + workerIdBits;
     /* 时间戳左移动位 */
-    private final long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
-    private final long sequenceMask = -1L ^ (-1L << sequenceBits);
+    private static final long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
+    private static final long sequenceMask = -1L ^ (-1L << sequenceBits);
 
     private long workerId;
 
@@ -105,7 +107,7 @@ public class SnowflakeIdGenerator{
                 id = ((0x000000FF & (long) mac[mac.length - 1]) | (0x0000FF00 & (((long) mac[mac.length - 2]) << 8))) >> 6;
                 id = id % (maxDatacenterId + 1);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             //logger.warn(" getDatacenterId: " + e.getMessage());
         }
         return id;

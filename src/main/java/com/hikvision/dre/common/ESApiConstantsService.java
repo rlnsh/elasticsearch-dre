@@ -15,11 +15,11 @@ public class ESApiConstantsService {
     /**
      * DOC es_url前缀
      */
-    public static final String ES_URL_DOC_PREFIX = ESApiConstants.ES_URL + SLASH + ESApiConstants.INDEX_NAME_DOC + SLASH + ESApiConstants.INDEX_TYPE_DOC;
+    public static final String ES_URL_DOC_PREFIX = ESApiConstants.getEsUrl() + SLASH + ESApiConstants.getIndexNameDoc() + SLASH + ESApiConstants.getIndexTypeDoc();
     /**
      * DOC es_api管道后缀
      */
-    public static final String ES_URL_PIPELINE_DOC_SUFFIX = "?pipeline=" + ESApiConstants.PIPELINE_NAME_DOC;
+    public static final String ES_URL_PIPELINE_DOC_SUFFIX = "?pipeline=" + ESApiConstants.getPipelineNameDoc();
 
     /**
      * es_api检索后缀
