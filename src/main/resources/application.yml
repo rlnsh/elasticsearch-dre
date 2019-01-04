@@ -67,6 +67,6 @@ es:
   userName: elastic #es用户名
   password: 20181203Wdd #es密码
   doc:
-    pipelineName: hkvs #管道名称
+    pipelineName: attachment #管道名称-固定为attachment
     indexName: hkvs #索引名称
     indexType: doc #索引类型
