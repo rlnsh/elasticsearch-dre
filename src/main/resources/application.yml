@@ -23,6 +23,13 @@ spring:
     admin:
       client:
         url: http://localhost:8000/spring-boot-admin
+#        api-path: es-dre
+        username: wangdd
+        password: 123456
+        period: 30000
+        instance:
+          name: es-dre
+#          service-base-url: http://localhost:9090
 management:
   endpoints:
     jmx:
@@ -65,7 +72,7 @@ es:
   url: http://10.14.69.82:9200 #es服务地址
 #  url: http://es-cn-0pp0xgmc90002c8jz.public.elasticsearch.aliyuncs.com:9200 #es服务地址
   userName: elastic #es用户名
-  password: 20181203Wdd #es密码
+  password: elastic #es密码
   doc:
     pipelineName: attachment #管道名称-固定为attachment
     indexName: hkvs #索引名称
