@@ -1,5 +1,6 @@
 package com.hikvision.dre;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hikvision.dre.common.ESApiConstants;
 import com.hikvision.dre.common.ESApiConstantsService;
@@ -20,7 +21,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringRunner.class)
@@ -44,11 +47,14 @@ public class ElasticsearchDreApplicationTests {
 
     @Test
     public void postTest() {
-        String url = "http://10.14.69.239:9999/artemis/api/salzburg/v1/componentModelManager/componentModelManagerQuery/queryComponentListByCid";
+//        String url = "http://10.14.69.239:9999/artemis/api/salzburg/v1/componentModelManager/componentModelManagerQuery/queryComponentListByCid";
+        String url = "http://10.14.69.239:9999/artemis/api/salzburg/v1/componentModelManager/componentModelManagerQuery/queryComponentChangelogList";
+//        String url = "http://pc-hz20103984.hikvision.com:64800/componentModelManagerQuery/queryComponentChangelogList";
         HttpMethod httpMethod = HttpMethod.POST;
-        MultiValueMap<String, String> queryBody = new LinkedMultiValueMap<>();
-        queryBody.add("c_component_id_list", "[\"dac\",\"nms\"]");
-        ResponseEntity<String> responseEntity = restTemplate.exchange(url, httpMethod, this.getRequestBody(queryBody), String.class);
+        MultiValueMap<String, Object> queryBody = new LinkedMultiValueMap<>();
+        queryBody.add("id_version_list", "[{\"c_component_id\":\"dac\",\"c_version_no\":\"1.7.0\"},{\"c_component_id\":\"nms\",\"c_version_no\":\"1.3.0\"}]");
+        HttpEntity httpEntity = this.getRequestBody(queryBody);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, httpMethod, httpEntity, String.class);
         logger.info("返回结果：{}", responseEntity.getBody());
     }
 
