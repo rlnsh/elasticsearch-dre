@@ -8,7 +8,7 @@
         <version>2.0.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.hikvision</groupId>
+    <groupId>com.wdd</groupId>
     <artifactId>elasticsearch-dre</artifactId>
     <version>1.0.0</version>
     <name>elasticsearch-dre</name>
@@ -84,7 +84,7 @@
             <version>5.1</version>
         </dependency>
         <dependency>
-            <groupId>com.hikvision</groupId>
+            <groupId>com.wdd</groupId>
             <artifactId>hik.log.sdk</artifactId>
             <version>${hik.sdk.version}</version>
         </dependency>
